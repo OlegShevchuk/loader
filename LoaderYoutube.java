@@ -9,17 +9,17 @@ import java.net.URL;
 /**
  * Created by Олег on 17.05.2015.
  */
-public class Loader
+public class LoaderYoutube
 {
-    private  String url;
     private String fileName;
-    private String folderSafe="D:\\RUSH\\Project\\JavaRushHomeWork\\temp\\Znaki";
-    public Loader(String url){
+    private String url;
+    private String folderSafe="D:\\RUSH\\Project\\JavaRushHomeWork\\temp";
+    public LoaderYoutube(String url){
         this.url=url;
         readPage();
     }
 
-    public Loader(String url, String fileName)
+    public LoaderYoutube(String url, String fileName)
     {
         this.url = url;
         this.fileName = fileName;
@@ -57,23 +57,20 @@ public class Loader
     private void readPage(){
         try
         {
+            url="http://ru.savefrom.net/#url="+url+"&utm_source=youtube.com&utm_medium=short_domains&utm_campaign=www.ssyoutube.com";//url.substring(0,12)+"ss"+url.substring(12);
+            //System.out.println(url);
+            url="http://ru.savefrom.net/#url=https://www.youtube.com/watch?v=1HKkGtwoSRI&utm_source=youtube.com&utm_medium=short_domains&utm_campaign=www.ssyoutube.com";
             URI uri=new URI(url);
             URL url=uri.toURL();
             BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
             while (br.ready()){
                 String line=br.readLine();
-                if (line.contains("<a href=")&&line.contains("title=")&&line.contains("файл")) {
-                    //System.out.println(line);
-                    String temp=line.substring(line.indexOf("get/"), line.indexOf("' title"));
-                    String fileUrl="http://www.ex.ua/"+temp;
+                System.out.println(line);
 
-                    String fileName="/"+line.substring(line.indexOf(temp+"' title='")).substring(temp.length()+9);
-                    fileName=fileName.substring(0,fileName.length()-3);
-                    fileName=fileName.substring(0,fileName.indexOf("'"));
+                if (line.contains("html5")) {
                     System.out.println(line);
-                    System.out.println(fileUrl);
-                    System.out.println(fileName);
-                    load(fileUrl, fileName);
+
+                    //load(fileUrl,fileName);
                 }
                 //if (line.contains("title")&&line.contains("get")) System.out.println(line);
             }
