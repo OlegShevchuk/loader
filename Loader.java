@@ -62,16 +62,22 @@ public class Loader
             BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
             while (br.ready()){
                 String line=br.readLine();
-                if (line.contains("mp3")&&line.contains("title")&&line.contains("get")) {
-                    String fileUrl="http://www.ex.ua/"+line.substring(line.indexOf("get/"), line.indexOf("' title"));
-                    String fileName="/"+line.substring(line.indexOf("title='"),line.indexOf("mp3")).substring(11)+"mp3";
-                    System.out.print(fileUrl);
+                if (line.contains("<a href=")&&line.contains("title=")&&line.contains("файл")) {
+                    //System.out.println(line);
+                    String temp=line.substring(line.indexOf("get/"), line.indexOf("' title"));
+                    String fileUrl="http://www.ex.ua/"+temp;
+
+                    String fileName="/"+line.substring(line.indexOf(temp+"' title='")).substring(temp.length()+9);
+                    fileName=fileName.substring(0,fileName.length()-3);
+                    fileName=fileName.substring(0,fileName.indexOf("'"));
+                    System.out.println(line);
+                    System.out.println(fileUrl);
                     System.out.println(fileName);
                     load(fileUrl,fileName);
                 }
-                //if (line.contains("mp3")) System.out.println(line);
+                //if (line.contains("title")&&line.contains("get")) System.out.println(line);
             }
-        }
+        }//<a href="/get/166413273" title="01. The Last Star Fighter.mp3" rel="nofollow">01. The Last Star Fighter.mp3</a>
         catch (URISyntaxException e)
         {
             e.printStackTrace();
@@ -89,24 +95,13 @@ public class Loader
         url=url.replace("get","load");
         System.out.println(url);
         URL url1 = null;
-        try
-        {
+        try(FileOutputStream writer=new FileOutputStream(folderSafe+fileName)){
             url1 = new URL(url);
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        try
-                (
-
-
-            FileOutputStream writer=new FileOutputStream(folderSafe+fileName)){
             InputStream is=url1.openStream();
             byte[] buff = new byte[1000000];
             int count = 0;
             while((count = is.read(buff)) != -1){
-                writer.write(buff,0,count);
+                writer.write(buff, 0, count);
                 writer.flush();
             }
         }

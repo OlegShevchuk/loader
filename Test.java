@@ -9,6 +9,6 @@ public class Test
     {
 
 
-        Loader load = new Loader("http://www.ex.ua/90671199?r=3,23776");
+        Loader load = new Loader("http://www.ex.ua/90677394?r=3,23776");
     }
 }
