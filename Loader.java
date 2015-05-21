@@ -12,18 +12,18 @@ import java.net.URL;
 public class Loader
 {
     private  String url;
-    private String fileName;
-    private String folderSafe="D:\\RUSH\\Project\\JavaRushHomeWork\\temp\\Znaki";
+   // private String fileName;
+    private String folderSafe="D:\\RUSH\\Project\\JavaRushHomeWork\\temp\\mackarad";
     public Loader(String url){
         this.url=url;
         readPage();
     }
 
-    public Loader(String url, String fileName)
-    {
-        this.url = url;
-        this.fileName = fileName;
-    }
+//    public Loader(String url, String fileName)
+//    {
+//        this.url = url;
+//        this.fileName = fileName;
+//    }
 
     public String getFolderSafe()
     {
@@ -45,15 +45,15 @@ public class Loader
         this.url = url;
     }
 
-    public String getFileName()
-    {
-        return fileName;
-    }
+//    public String getFileName()
+//    {
+//        return fileName;
+//    }
 
-    public void setFileName(String fileName)
-    {
-        this.fileName = fileName;
-    }
+//    public void setFileName(String fileName)
+//    {
+//        this.fileName = fileName;
+//    }
     private void readPage(){
         try
         {
@@ -62,22 +62,22 @@ public class Loader
             BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
             while (br.ready()){
                 String line=br.readLine();
-                if (line.contains("<a href=")&&line.contains("title=")&&line.contains("файл")) {
-                    //System.out.println(line);
+                if (line.contains("<a href='/get/")&&line.contains("title=")&&line.contains("span class=small")) {
+//                    System.out.println(line);
+//                    System.out.println();
                     String temp=line.substring(line.indexOf("get/"), line.indexOf("' title"));
                     String fileUrl="http://www.ex.ua/"+temp;
 
                     String fileName="/"+line.substring(line.indexOf(temp+"' title='")).substring(temp.length()+9);
                     fileName=fileName.substring(0,fileName.length()-3);
                     fileName=fileName.substring(0,fileName.indexOf("'"));
-                    System.out.println(line);
-                    System.out.println(fileUrl);
-                    System.out.println(fileName);
+//                    System.out.print(fileUrl+"     ");
+//                    System.out.println(fileName);
                     load(fileUrl, fileName);
                 }
-                //if (line.contains("title")&&line.contains("get")) System.out.println(line);
+
             }
-        }//<a href="/get/166413273" title="01. The Last Star Fighter.mp3" rel="nofollow">01. The Last Star Fighter.mp3</a>
+        }
         catch (URISyntaxException e)
         {
             e.printStackTrace();
@@ -92,26 +92,47 @@ public class Loader
         }
     }
     private void load(String url, String fileName){
-        //url=url.replace("get","load");
-        //System.out.println(url);
-        URL url1 = null;
-        try(FileOutputStream writer=new FileOutputStream(folderSafe+fileName)){
-            url1 = new URL(url);
-            InputStream is=url1.openStream();
-            byte[] buff = new byte[1000000];
-            int count = 0;
-            while((count = is.read(buff)) != -1){
-                writer.write(buff, 0, count);
-                writer.flush();
+        new Thread(new LoadThread(url,fileName)).start();
+    }
+    class LoadThread implements Runnable{
+
+        private String url;
+        private String fileName;
+
+
+        public LoadThread(String url, String fileName)
+        {
+            this.url = url;
+            this.fileName = fileName;
+
+        }
+
+        @Override
+        public void run()
+        {
+
+            URL url1 = null;
+            try(FileOutputStream writer=new FileOutputStream(folderSafe+fileName)){
+                url1 = new URL(url);
+                InputStream is=url1.openStream();
+                byte[] buff = new byte[409600];
+                int count = 0;
+                int i=0;
+                while((count = is.read(buff)) != -1){
+                    writer.write(buff, 0, count);
+                    writer.flush();
+                    i+=count;
+                }
+                System.out.println(fileName+" завершенно! загруженно "+i+" байт");
             }
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            catch (MalformedURLException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

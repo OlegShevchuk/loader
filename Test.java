@@ -9,7 +9,7 @@ public class Test
     {
 
 
-        Loader load = new Loader("http://www.ex.ua/90626199?r=3,23776");
+        Loader load = new Loader("http://www.ex.ua/90853464?r=3,23776");
         //LoaderYoutube load=new LoaderYoutube("https://www.youtube.com/watch?v=1HKkGtwoSRI");
 
     }
