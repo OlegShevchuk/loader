@@ -122,6 +122,7 @@ public class Loader
                     writer.write(buff, 0, count);
                     writer.flush();
                     i+=count;
+                    Thread.sleep(100);
                 }
                 System.out.println(fileName+" завершенно! загруженно "+i+" байт");
             }
@@ -130,6 +131,10 @@ public class Loader
                 e.printStackTrace();
             }
             catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
