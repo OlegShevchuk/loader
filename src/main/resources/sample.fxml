@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.*?>
+<GridPane gridLinesVisible="true" maxHeight="1280.0" maxWidth="1920.0" minHeight="200.0" minWidth="282.0" prefHeight="200.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="ALWAYS" maxWidth="290.0" minWidth="10.0" prefWidth="282.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+    <AnchorPane cache="true" focusTraversable="true" minHeight="200.0" minWidth="300.0" pickOnBounds="false" prefHeight="200.0" prefWidth="389.0" snapToPixel="false" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="button1" layoutX="229.0" layoutY="88.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="26.0" text="..." />
+                <Label layoutX="14.0" layoutY="47.0" prefHeight="15.0" prefWidth="49.0" text="Ссылка" />
+                <TextField fx:id="textField2" layoutX="63.0" layoutY="88.0" prefHeight="24.0" prefWidth="166.0" />
+                <TextField fx:id="textField1" layoutX="65.0" layoutY="43.0" prefHeight="24.0" prefWidth="195.0" snapToPixel="false" />
+                <Label layoutX="14.0" layoutY="92.0" prefHeight="16.0" prefWidth="49.0" text="Папка" />
+                <Button fx:id="button" layoutX="100.0" layoutY="150.0" mnemonicParsing="false" text="Начать загрузку" />
+         </children>
+         <effect>
+            <Blend />
+         </effect>
+      </AnchorPane>
+   </children>
+</GridPane>
