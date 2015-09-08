@@ -86,7 +86,7 @@ public class Loader {
         String fileUrl = "http://www.ex.ua/" + temp;
         String fileName = "/" + line.substring(line.indexOf(temp + "' title='")).substring(temp.length() + 9);
         fileName = fileName.substring(0, fileName.indexOf("'"));
-        System.out.println(fileName);
+        System.out.println("Имя файла: "+fileName+" путь к файлу: "+ fileUrl);
         load(fileUrl, fileName);
     }
 
@@ -94,9 +94,11 @@ public class Loader {
     private void size(BufferedReader br) throws IOException {
         while (br.ready()) {
             String line = br.readLine();
+            //System.out.println(line);
             if (line.contains("<td align=right width=230 class=small>")) {
+                line = br.readLine();
                 String result = line.substring(line.indexOf("<b>") + 3, line.indexOf("</b>")).replaceAll("\\,", "");
-                System.out.println(result);
+                System.out.println("Размер файла: "+result);
                 size = Integer.parseInt(result);
                 break;
 

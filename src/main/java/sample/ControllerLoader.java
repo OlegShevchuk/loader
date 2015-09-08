@@ -26,6 +26,7 @@ class ControllerLoader implements Runnable{
                     if(threads.peekFirst()!=null){
                         threadsList.set(i,threads.pollFirst());
                         threadsList.get(i).start();
+                        System.out.println(threadsList.get(i).getName());
                     }else{
                         threads.remove(i);
                     }
@@ -38,9 +39,10 @@ class ControllerLoader implements Runnable{
     //формирует начальный список нитей и запускает их
     private List<Thread> creatList(){
         List<Thread> threadsList=new ArrayList<>();
-        for (int i = 0; i <20&&threads.peekFirst()!=null ; i++) {
-            threads.add(threads.pollFirst());
-            threadsList.get(i).start();
+        for (int i = 0; i <20; i++) {
+            if (threads.peekFirst()!=null){
+            threadsList.add(threads.pollFirst());
+            threadsList.get(i).start();}
         }
         return threadsList;
     }

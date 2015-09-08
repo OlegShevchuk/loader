@@ -46,6 +46,7 @@ class LoadThread implements Runnable {
     @Override
     public void run() {
         Loader.sleep();
+        System.out.println(" начало загрузки файла: "+fileName);
         folder(folderSafe);
         int count = 0;
         try (InputStream is = new URL(url).openStream();
@@ -55,6 +56,7 @@ class LoadThread implements Runnable {
             int i = 0;
             int wait=0;
             while (i<size) {
+                Thread.sleep(50);
                 count = is.read(buff);
                 if (count<1){
                     sleep(wait++);
@@ -68,9 +70,11 @@ class LoadThread implements Runnable {
                 writer.write(buff, 0, count);
                 writer.flush();
                 i += count;
+                System.out.println(count);
                 count=0;
                 progressBar.setProgress(i/(double)size);
             }
+        System.out.println(i+" загруженно");
         } catch (Exception e) {
             e.printStackTrace();
         }
